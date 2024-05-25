@@ -15,7 +15,7 @@
             <h1>Emission Data</h1>
             <p>Use the interactive charts below to explore the dataset</p>
           </div>
-
+        <div id="pie"></div>
         <div id="lineplot"></div>
 
 
@@ -28,13 +28,16 @@
         d3.json("data.json").then(function(data) {
             console.log(data)
 
-            let country = "Venezuela"
+            let selectedCountry = "Albania"
+            let selectedYear = 1997
+
+
 
             emissionData = []
             yearData =[]
 
             for (let i=0; i<data.length; i++) {
-                if (data[i].Country == country) {
+                if (data[i].Country == selectedCountry) {
                     emissionData.push(data[i].Total);
                     yearData.push(data[i].Year);
                 }
@@ -42,16 +45,30 @@
 
             console.log(emissionData);
             console.log(yearData);
+            
+
+            let pieLabels = ["Cement", "Coal", "Flaring", "Gas", "Oil", "Other"]
+            let pieData = [10,20,5,3,2,4]
 
             let trace1 = {
+                values : pieData,
+                labels : pieLabels,
+                type : "pie"
+            };
+
+            let trace1data = [trace1]
+
+            Plotly.newPlot("pie", trace1data);
+
+            let trace2 = {
                 x : yearData,
                 y : emissionData,
                 type : "scatter",
                 mode : "markers"
             };
 
-            let layout = {
-                title : `${country} Emissions`,
+            let layout2 = {
+                title : `${selectedCountry} Emissions`,
                 xaxis : {
                     title : "Year"
                 },
@@ -60,9 +77,9 @@
                 }
             };
 
-            let traceData = [trace1];
+            let traceData2 = [trace2];
 
-            Plotly.newPlot("lineplot", traceData, layout);
+            Plotly.newPlot("lineplot", traceData2, layout2);
 
         });
     </script>
