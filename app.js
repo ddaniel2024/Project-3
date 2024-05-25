@@ -1,1 +1,0 @@
-d3.json("output.json").then(function(data) {console.log(data)});

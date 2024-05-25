@@ -1,18 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Emission Data</title>
 </head>
+
 <body>
-    
+
+    <div class="container">
+
+        <div>
+            <h1>Emission Data</h1>
+            <p>Use the interactive charts below to explore the dataset</p>
+          </div>
+
+        <div id="lineplot"></div>
 
 
 
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+    </div>
+
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="app.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+        d3.json("data.json").then(function(data) {
+            console.log(data)
+
+            let country = "Venezuela"
+
+            emissionData = []
+            yearData =[]
+
+            for (let i=0; i<data.length; i++) {
+                if (data[i].Country == country) {
+                    emissionData.push(data[i].Total);
+                    yearData.push(data[i].Year);
+                }
+            };
+
+            console.log(emissionData);
+            console.log(yearData);
+
+            let trace1 = {
+                x : yearData,
+                y : emissionData,
+                type : "scatter",
+                mode : "markers"
+            };
+
+            let layout = {
+                title : `${country} Emissions`,
+                xaxis : {
+                    title : "Year"
+                },
+                yaxis : {
+                    title : "MtCO2"
+                }
+            };
+
+            let traceData = [trace1];
+
+            Plotly.newPlot("lineplot", traceData, layout);
+
+        });
+    </script>
 
 </body>
+
 </html>
