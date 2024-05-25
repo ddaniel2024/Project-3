@@ -15,6 +15,7 @@
             <h1>Emission Data</h1>
             <p>Use the interactive charts below to explore the dataset</p>
           </div>
+        <div id="country"></div>
         <div id="pie"></div>
         <div id="lineplot"></div>
 
@@ -31,7 +32,8 @@
             let selectedCountry = "Albania"
             let selectedYear = 1997
 
-
+            let title = d3.select("#country");
+            title.text(selectedCountry);
 
             emissionData = []
             yearData =[]
@@ -48,7 +50,18 @@
             
 
             let pieLabels = ["Cement", "Coal", "Flaring", "Gas", "Oil", "Other"]
-            let pieData = [10,20,5,3,2,4]
+            let pieData = []
+
+            for (let i=0; i<data.length; i++) {
+                if (data[i].Country == selectedCountry & data[i].Year == selectedYear) {
+                    pieData.push(data[i].Cement);
+                    pieData.push(data[i].Coal);
+                    pieData.push(data[i].Flaring);
+                    pieData.push(data[i].Gas);
+                    pieData.push(data[i].Oil);
+                    pieData.push(data[i].Other);
+                }
+            };
 
             let trace1 = {
                 values : pieData,
@@ -58,7 +71,12 @@
 
             let trace1data = [trace1]
 
-            Plotly.newPlot("pie", trace1data);
+            let layout1 = {
+                title : `Emissions in ${selectedYear}`
+            };
+
+            <!--https://plotly.com/javascript/pie-charts/-->
+            Plotly.newPlot("pie", trace1data, layout1);
 
             let trace2 = {
                 x : yearData,
@@ -68,7 +86,7 @@
             };
 
             let layout2 = {
-                title : `${selectedCountry} Emissions`,
+                title : `Emissions since ${yearData[0]}`,
                 xaxis : {
                     title : "Year"
                 },
