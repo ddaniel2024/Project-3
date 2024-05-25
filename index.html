@@ -15,6 +15,9 @@
             <h1>Emission Data</h1>
             <p>Use the interactive charts below to explore the dataset</p>
           </div>
+        <div>
+            <select id="selDataset" onchange="optionChanged(this.value)"></select>
+        </div>
         <div id="country"></div>
         <div id="pie"></div>
         <div id="lineplot"></div>
@@ -29,37 +32,53 @@
         d3.json("data.json").then(function(data) {
             console.log(data)
 
+            let countries = data.countries;
+            console.log(countries);
+
+            let emissionData = data.data;
+            console.log(emissionData);
+
+            let dropdown = d3.select("#selDataset")
+
+            for (let i=0; i<countries.length; i++) {
+                dropdown.append("option").text(countries[i]);
+            };
+
+
             let selectedCountry = "Albania"
             let selectedYear = 1997
 
             let title = d3.select("#country");
             title.text(selectedCountry);
 
-            emissionData = []
-            yearData =[]
 
-            for (let i=0; i<data.length; i++) {
-                if (data[i].Country == selectedCountry) {
-                    emissionData.push(data[i].Total);
-                    yearData.push(data[i].Year);
+
+            emissions = []
+            years =[]
+
+            for (let i=0; i<emissionData.length; i++) {
+                if (emissionData[i].Country == selectedCountry) {
+                    emissions.push(emissionData[i].Total);
+                    years.push(emissionData[i].Year);
                 }
             };
 
-            console.log(emissionData);
-            console.log(yearData);
+            console.log(emissions);
+            console.log(years);
             
+
 
             let pieLabels = ["Cement", "Coal", "Flaring", "Gas", "Oil", "Other"]
             let pieData = []
 
-            for (let i=0; i<data.length; i++) {
-                if (data[i].Country == selectedCountry & data[i].Year == selectedYear) {
-                    pieData.push(data[i].Cement);
-                    pieData.push(data[i].Coal);
-                    pieData.push(data[i].Flaring);
-                    pieData.push(data[i].Gas);
-                    pieData.push(data[i].Oil);
-                    pieData.push(data[i].Other);
+            for (let i=0; i<emissionData.length; i++) {
+                if (emissionData[i].Country == selectedCountry & emissionData[i].Year == selectedYear) {
+                    pieData.push(emissionData[i].Cement);
+                    pieData.push(emissionData[i].Coal);
+                    pieData.push(emissionData[i].Flaring);
+                    pieData.push(emissionData[i].Gas);
+                    pieData.push(emissionData[i].Oil);
+                    pieData.push(emissionData[i].Other);
                 }
             };
 
@@ -78,15 +97,17 @@
             <!--https://plotly.com/javascript/pie-charts/-->
             Plotly.newPlot("pie", trace1data, layout1);
 
+
+
             let trace2 = {
-                x : yearData,
-                y : emissionData,
+                x : years,
+                y : emissions,
                 type : "scatter",
                 mode : "markers"
             };
 
             let layout2 = {
-                title : `Emissions since ${yearData[0]}`,
+                title : `Emissions since ${years[0]}`,
                 xaxis : {
                     title : "Year"
                 },
