@@ -31,9 +31,9 @@
 
         <div id="info"></div>
 
-        <div id="pie"></div>
-
         <div id="scatter"></div>
+
+        <div id="pie"></div>
 
     </div>
 
@@ -45,20 +45,18 @@
         function buildCharts() {
             d3.json("data.json").then(function(data) {
 
+                let emissionData = data.data;
+
+                let selectedYear = d3.select("#selYear").property("value");
+                let selectedCountry = d3.select("#selCountry").property("value");
+
                 //Pie Chart
                 let pieLabels = ["Cement", "Coal", "Flaring", "Gas", "Oil", "Other"]
                 let pieData = []
 
-                let emissionData = data.data;
-
-                let yearDropdown = d3.select("#selYear");
-                let selectedYear = yearDropdown.property("value");
-
-                let countryDropdown = d3.select("#selCountry");
-                let selectedCountry = countryDropdown.property("value");
-
                 for (let i=0; i<emissionData.length; i++) {
                     if (emissionData[i].Country == selectedCountry & emissionData[i].Year == selectedYear) {
+                        pieData.push(emissionData[i].Total);
                         pieData.push(emissionData[i].Cement);
                         pieData.push(emissionData[i].Coal);
                         pieData.push(emissionData[i].Flaring);
@@ -68,20 +66,34 @@
                     }
                 };
 
-                let trace1 = {
+                d3.select("#pie").html("");
+
+                if (pieData[0] == undefined | pieData[0] == 0) {
+                    //https://stackoverflow.com/questions/6840326/how-can-i-create-and-style-a-div-using-javascript
+                    let div = document.createElement("div");
+                    div.innerHTML = "Data Unavailable";
+                    div.setAttribute("class", "plot-text");
+                    pie.appendChild(div);
+                }
+                else {
+
+                    let trace1 = {
                     values : pieData,
                     labels : pieLabels,
                     type : "pie"
-                };
+                    };
 
-                let trace1data = [trace1]
+                    let trace1data = [trace1]
 
-                let layout1 = {
-                    title : `Emissions in ${selectedYear}`
-                };
+                    let layout1 = {
+                        title : `Emissions in ${selectedYear}`
+                    };
 
-                //https://plotly.com/javascript/pie-charts/
-                Plotly.newPlot("pie", trace1data, layout1);
+                    //https://plotly.com/javascript/pie-charts/
+                    Plotly.newPlot("pie", trace1data, layout1);
+                }
+
+                
 
                 //Scatter Graph
                 emissions = []
@@ -103,6 +115,7 @@
                 };
 
                 let layout2 = {
+                    title : "Emissions over time",
                     xaxis : {
                         title : "Year"
                     },
