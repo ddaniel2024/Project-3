@@ -147,6 +147,15 @@
                 emissions = [];
                 continents = [];
 
+                function findSample(row) {
+                return row.Country == "Albania"
+                };
+
+
+                let filtered = gdpData.filter(findSample);
+                console.log(filtered);
+
+
                 
                 //https://stackoverflow.com/questions/29888256/using-integer-keys-with-dot-notation-to-access-property-in-javascript-objects
 
