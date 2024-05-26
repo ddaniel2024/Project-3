@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emission Data</title>
+    <link rel="stylesheet" href="style.css">
+    <!--https://www.w3schools.com/html/html_css.asp-->
 </head>
 
 <body>
@@ -12,10 +14,10 @@
     <div class="container">
 
         <div>
-            <h1>Emission Data</h1>
-            <p>Use the interactive charts below to explore the dataset</p>
+            <h1 id="title">Emission Data</h1>
+            <p id="subtitle">Use the interactive charts below to explore the dataset</p>
           </div>
-        <div>
+        <div id="dropdown">
             <select id="selDataset" onchange="optionChanged(this.value)"></select>
         </div>
         <div id="country"></div>
