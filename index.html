@@ -47,9 +47,9 @@
 
         //Function to build charts
         function buildCharts() {
-            d3.json("data.json").then(function(data) {
+            d3.json("output.json").then(function(data) {
 
-                let emissionData = data.data;
+                let emissionData = data.emissions;
 
                 let selectedYear = d3.select("#selYear").property("value");
                 let selectedCountry = d3.select("#selCountry").property("value");
