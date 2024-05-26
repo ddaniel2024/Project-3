@@ -20,16 +20,20 @@
         </div>
 
         <div class="dropdown">
-            <p class="dashboard-title">Country</p>
-            <div class="selDataset"><select id="selCountry" onchange="optionChanged(this.value)"></select></div>
+            <p class="dropdown-title">Country</p>
+            <select id="selCountry" class="selDataset" onchange="optionChanged(this.value)"></select>
         </div>
 
         <div class="dropdown">
-            <p class="dashboard-title">Year</p>
-            <div class="selDataset"><select id="selYear" onchange="optionChanged(this.value)"></select></div>
+            <p class="dropdown-title">Year</p>
+            <select id="selYear" class="selDataset" onchange="optionChanged(this.value)"></select>
         </div>
 
-        <div id="info"></div>
+        <div id="info">
+            <p class="dropdown-title">Total Emissions</p>
+            <p class="total-emissions"></p>
+            <p class="dropdown-subtitle">MtCO2</p>
+        </div>
 
         <div id="scatter"></div>
 
@@ -70,15 +74,18 @@
 
                 if (pieData[0] == undefined | pieData[0] == 0) {
                     //https://stackoverflow.com/questions/6840326/how-can-i-create-and-style-a-div-using-javascript
-                    let div = document.createElement("div");
-                    div.innerHTML = "Data Unavailable";
-                    div.setAttribute("class", "plot-text");
-                    pie.appendChild(div);
+                    let pieDiv = document.createElement("div");
+                    pieDiv.innerHTML = "Data Unavailable";
+                    pieDiv.setAttribute("class", "plot-text");
+                    pie.appendChild(pieDiv);
+
+                    d3.select(".total-emissions").text("N/A");
                 }
                 else {
+                    d3.select(".total-emissions").text(pieData[0]);
 
                     let trace1 = {
-                    values : pieData,
+                    values : pieData.slice(1,6),
                     labels : pieLabels,
                     type : "pie"
                     };
@@ -115,7 +122,7 @@
                 };
 
                 let layout2 = {
-                    title : "Emissions over time",
+                    title : "Total Emissions Over The Last 100 Years",
                     xaxis : {
                         title : "Year"
                     },
