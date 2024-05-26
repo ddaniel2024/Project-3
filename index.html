@@ -14,7 +14,7 @@
 
     <div class="container">
 
-        <div>
+        <div id="heading">
             <h1 id="title">Emission Data</h1>
             <p id="subtitle">Use the interactive charts below to explore the dataset</p>
         </div>
@@ -33,112 +33,132 @@
 
         <div id="pie"></div>
 
-        <div id="lineplot"></div>
-
-
+        <div id="scatter"></div>
 
     </div>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script>
-        d3.json("data.json").then(function(data) {
-            console.log(data)
+        let selectedYear = 1997;
 
-            let countries = data.countries;
-            console.log(countries);
+        //Function to build charts
+        function buildCharts(selectedCountry, selectedYear) {
+            d3.json("data.json").then(function(data) {
 
-            let emissionData = data.data;
-            console.log(emissionData);
+                //Pie Chart
+                let pieLabels = ["Cement", "Coal", "Flaring", "Gas", "Oil", "Other"]
+                let pieData = []
 
-            let countryDropdown = d3.select("#selCountry");
+                let emissionData = data.data;
 
-            for (let i=0; i<countries.length; i++) {
-                countryDropdown.append("option").text(countries[i]);
-            };
+                for (let i=0; i<emissionData.length; i++) {
+                    if (emissionData[i].Country == selectedCountry & emissionData[i].Year == selectedYear) {
+                        pieData.push(emissionData[i].Cement);
+                        pieData.push(emissionData[i].Coal);
+                        pieData.push(emissionData[i].Flaring);
+                        pieData.push(emissionData[i].Gas);
+                        pieData.push(emissionData[i].Oil);
+                        pieData.push(emissionData[i].Other);
+                    }
+                };
 
+                let trace1 = {
+                    values : pieData,
+                    labels : pieLabels,
+                    type : "pie"
+                };
 
-            let selectedCountry = "Albania";
-            let selectedYear = 1997;
+                let trace1data = [trace1]
 
-            let info = d3.select("#info");
-            info.text(selectedCountry);
+                let layout1 = {
+                    title : `Emissions in ${selectedYear}`
+                };
 
+                //https://plotly.com/javascript/pie-charts/
+                Plotly.newPlot("pie", trace1data, layout1);
 
+                //Scatter Graph
+                emissions = []
+                years =[]
 
-            emissions = []
-            years =[]
+                for (let i=0; i<emissionData.length; i++) {
+                    if (emissionData[i].Country == selectedCountry) {
+                        emissions.push(emissionData[i].Total);
+                        years.push(emissionData[i].Year);
+                    }
+                };
 
-            for (let i=0; i<emissionData.length; i++) {
-                if (emissionData[i].Country == selectedCountry) {
-                    emissions.push(emissionData[i].Total);
-                    years.push(emissionData[i].Year);
-                }
-            };
+                let trace2 = {
+                    x : years,
+                    y : emissions,
+                    type : "scatter",
+                    mode : "markers"
+                };
 
-            console.log(emissions);
-            console.log(years);
+                let layout2 = {
+                    title : `Emissions since ${years[0]}`,
+                    xaxis : {
+                        title : "Year"
+                    },
+                    yaxis : {
+                        title : "MtCO2"
+                    }
+                };
+
+                let traceData2 = [trace2];
+
+                Plotly.newPlot("scatter", traceData2, layout2);
+
+            });
+        }
+    
+        //Function to initialise dashboard
+        function init() {
+            d3.json("data.json").then(function(data) {
+
+                let countries = data.countries;
+                let countryDropdown = d3.select("#selCountry");
+                for (let i=0; i<countries.length; i++) {
+                    countryDropdown.append("option").text(countries[i]);
+                };
+
+                selectedCountry = countryDropdown.property("value");
+
+                let emissionData = data.data;
+                years =[]
+
+                for (let i=0; i<emissionData.length; i++) {
+                    if (emissionData[i].Country == selectedCountry) {
+                        years.push(emissionData[i].Year);
+                    }
+                };
+                
+                let yearDropdown = d3.select("#selYear");
+                for (let i=0; i<years.length; i++) {
+                    yearDropdown.append("option").text(years[i]);
+                };
+
+                selectedYear = yearDropdown.property("value");
+
+                buildCharts(selectedCountry, selectedYear);
+            });
+        }
+
+        //Function on option change
+        function optionChanged(newCountry) {
+            d3.json("data.json").then(function(data) {
+
+                d3.selectAll("#selCountry").on("change", buildCharts(newCountry));
+                d3.selectAll("#selYear").on("change", buildCharts(newCountry));
+
+            });
             
-            let yearDropdown = d3.select("#selYear");
+        }
 
-            for (let i=0; i<years.length; i++) {
-                yearDropdown.append("option").text(years[i]);
-            };
+        //Initialise dashboard
+        init();
 
-
-            let pieLabels = ["Cement", "Coal", "Flaring", "Gas", "Oil", "Other"]
-            let pieData = []
-
-            for (let i=0; i<emissionData.length; i++) {
-                if (emissionData[i].Country == selectedCountry & emissionData[i].Year == selectedYear) {
-                    pieData.push(emissionData[i].Cement);
-                    pieData.push(emissionData[i].Coal);
-                    pieData.push(emissionData[i].Flaring);
-                    pieData.push(emissionData[i].Gas);
-                    pieData.push(emissionData[i].Oil);
-                    pieData.push(emissionData[i].Other);
-                }
-            };
-
-            let trace1 = {
-                values : pieData,
-                labels : pieLabels,
-                type : "pie"
-            };
-
-            let trace1data = [trace1]
-
-            let layout1 = {
-                title : `Emissions in ${selectedYear}`
-            };
-
-            <!--https://plotly.com/javascript/pie-charts/-->
-            Plotly.newPlot("pie", trace1data, layout1);
-
-
-
-            let trace2 = {
-                x : years,
-                y : emissions,
-                type : "scatter",
-                mode : "markers"
-            };
-
-            let layout2 = {
-                title : `Emissions since ${years[0]}`,
-                xaxis : {
-                    title : "Year"
-                },
-                yaxis : {
-                    title : "MtCO2"
-                }
-            };
-
-            let traceData2 = [trace2];
-
-            Plotly.newPlot("lineplot", traceData2, layout2);
-
-        });
     </script>
 
 </body>
