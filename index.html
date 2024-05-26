@@ -144,21 +144,37 @@
                 gdps = [];
                 populations = [];
                 countries = [];
+                emissions = [];
+                continents = [];
+
+                
                 //https://stackoverflow.com/questions/29888256/using-integer-keys-with-dot-notation-to-access-property-in-javascript-objects
 
                 for (let i=0; i<gdpData.length; i++) {
-                    gdps.push(gdpData[i]["1970"]);
-                    populations.push(populationData[i]["1970"]);
+                    gdps.push(gdpData[i]["2020"]);
+                    populations.push(Math.log(populationData[i]["2020"]));
+                    countries.push(gdpData[i].Country);
+                    continents.push(gdpData[i].Continent);
+
                 };
 
-                console.log(gdps);
-                console.log(populations);
+                for (let i=0; i<emissionData.length; i++) {
+                    if (emissionData[i].Year == 2020) {
+                        emissions.push(emissionData[i].Total);
+                    }
+                };
+
 
                 let trace3 = {
-                    x : populations,
-                    y : gdps,
+                    x : gdps,
+                    y : emissions,
                     type : "scatter",
-                    mode : "markers"
+                    mode : "markers",
+                    text : countries,
+                    marker : {
+                        size : populations,
+                        color : continents
+                    }
                 };
 
                 let trace3Data = [trace3]
