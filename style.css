@@ -1,4 +1,5 @@
 #title {
+    width : 100%;
     text-align: center;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
 }
@@ -11,21 +12,58 @@
 
 .container {
     background-color: lightgrey;
+    width : 100%;
     border : 2px solid white;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
-#dropdown {
+.dropdown {
     background-color: white;
-    border : 2px solid white;
-    border-radius: 10px;
     width: 250px;
-    height : 50px;
-    margin : 5px;
-    align-content: center;
+    height : 80px;
+    border : 2px solid white;
+    border-radius: 20px;
+    margin : 10px;
+    padding : 2px;
 }
 
-#selDataset {
-    align-items: center;
-    margin : 10px
+.dashboard-title {
+    font-weight: 1000;
+    text-align: center;    
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.selDataset {
+    width : 95%;
+    float : right;
+}
+
+#info {
+    background-color: white;
+    width: 250px;
+    height : 80px;
+    border : 2px solid white;
+    border-radius: 20px;
+    margin : 10px;
+    padding : 2px;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+
+
+#pie {
+    background-color: white;
+    width : 50%;
+    border : 2px solid white;
+    border-radius: 20px;
+    margin : 10px;
+}
+
+#lineplot {
+    background-color: white;
+    width : 50%;
+    border : 2px solid white;
+    border-radius: 20px;
+    margin : 10px;
 }
