@@ -39,6 +39,8 @@
 
         <div id="pie"></div>
 
+        <div id="bubble"></div>
+
     </div>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -48,8 +50,11 @@
         //Function to build charts
         function buildCharts() {
             d3.json("output.json").then(function(data) {
+                console.log(data);
 
                 let emissionData = data.emissions;
+                let gdpData = data.gdp;
+                let populationData = data.population;
 
                 let selectedYear = d3.select("#selYear").property("value");
                 let selectedCountry = d3.select("#selCountry").property("value");
@@ -135,12 +140,38 @@
 
                 Plotly.newPlot("scatter", traceData2, layout2);
 
+                //Bubble Chart
+                gdps = [];
+                populations = [];
+                countries = [];
+                //https://stackoverflow.com/questions/29888256/using-integer-keys-with-dot-notation-to-access-property-in-javascript-objects
+
+                for (let i=0; i<gdpData.length; i++) {
+                    gdps.push(gdpData[i]["1970"]);
+                    populations.push(populationData[i]["1970"]);
+                };
+
+                console.log(gdps);
+                console.log(populations);
+
+                let trace3 = {
+                    x : populations,
+                    y : gdps,
+                    type : "scatter",
+                    mode : "markers"
+                };
+
+                let trace3Data = [trace3]
+
+                Plotly.newPlot("bubble", trace3Data);
+
             });
+
         }
     
         //Function to initialise dashboard
         function init() {
-            d3.json("data.json").then(function(data) {
+            d3.json("output.json").then(function(data) {
 
                 let countries = data.countries;
                 let countryDropdown = d3.select("#selCountry");
@@ -170,7 +201,7 @@
 
         //Function on option change
         function optionChanged() {
-            d3.json("data.json").then(function(data) {
+            d3.json("output.json").then(function(data) {
 
                 buildCharts();
             });
