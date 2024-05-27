@@ -49,7 +49,7 @@
 
         //Function to build charts
         function buildCharts() {
-            d3.json("output.json").then(function(data) {
+            d3.json("data.json").then(function(data) {
                 console.log(data);
 
                 let emissionData = data.emissions;
@@ -87,15 +87,13 @@
                     d3.select(".total-emissions").text("N/A");
                 }
                 else {
-                    d3.select(".total-emissions").text(pieData[0]);
-
                     let trace1 = {
                     values : pieData.slice(1,6),
                     labels : pieLabels,
                     type : "pie"
                     };
 
-                    let trace1data = [trace1]
+                    let trace1data = [trace1];
 
                     let layout1 = {
                         title : `Emissions in ${selectedYear}`
@@ -103,9 +101,9 @@
 
                     //https://plotly.com/javascript/pie-charts/
                     Plotly.newPlot("pie", trace1data, layout1);
-                }
 
-                
+                    d3.select(".total-emissions").text(pieData[0]);
+                }
 
                 //Scatter Graph
                 emissions = []
@@ -118,7 +116,6 @@
                     }
                 };
                 
-
                 let trace2 = {
                     x : years,
                     y : emissions,
@@ -132,63 +129,70 @@
                         title : "Year"
                     },
                     yaxis : {
-                        title : "MtCO2"
+                        title : "Total Emissions (MtCO2)"
                     }
                 };
 
-                let traceData2 = [trace2];
+                let trace2Data = [trace2];
 
-                Plotly.newPlot("scatter", traceData2, layout2);
+                Plotly.newPlot("scatter", trace2Data, layout2);
 
                 //Bubble Chart
                 gdps = [];
                 populations = [];
                 countries = [];
-                emissions = [];
                 continents = [];
+                emissions = [];
 
-                function findSample(row) {
-                return row.Country == "Albania"
-                };
-
-
-                let filtered = gdpData.filter(findSample);
-                console.log(filtered);
-
-
-                
                 //https://stackoverflow.com/questions/29888256/using-integer-keys-with-dot-notation-to-access-property-in-javascript-objects
-
                 for (let i=0; i<gdpData.length; i++) {
+
+                    let country = gdpData[i].Country;
+
                     gdps.push(gdpData[i]["2020"]);
-                    populations.push(Math.log(populationData[i]["2020"]));
-                    countries.push(gdpData[i].Country);
+                    populations.push(populationData[i]["2020 Population"]);
+                    countries.push(country);
                     continents.push(gdpData[i].Continent);
 
+                    for (let j=0; j<emissionData.length; j++) {
+                        if (emissionData[j].Country == country & emissionData[j].Year == 2020) {
+                        emissions.push(emissionData[j].Total);
+                        }
+                    };
                 };
 
-                for (let i=0; i<emissionData.length; i++) {
-                    if (emissionData[i].Year == 2020) {
-                        emissions.push(emissionData[i].Total);
-                    }
-                };
+                //function findRow(row) {
+                //return row.Year == 2020
+                //};
 
+                //let emissionsRow = emissionData.filter(findRow);
+                //console.log(emissionsRow);
+
+                console.log(emissions);
 
                 let trace3 = {
-                    x : gdps,
-                    y : emissions,
+                    x : populations,
+                    y : gdps,
                     type : "scatter",
                     mode : "markers",
-                    text : countries,
                     marker : {
-                        size : populations,
-                        color : continents
+                        size : emissions
+                    },
+                    text : countries,
+                };
+
+                let layout3 = {
+                    xaxis : {
+                        title : "Population",
+                    },
+                    yaxis : {
+                        title : "GDP ($)"
                     }
                 };
 
-                let trace3Data = [trace3]
+                let trace3Data = [trace3];
 
-                Plotly.newPlot("bubble", trace3Data);
+                Plotly.newPlot("bubble", trace3Data, layout3);
 
             });
 
@@ -196,12 +200,13 @@
     
         //Function to initialise dashboard
         function init() {
-            d3.json("output.json").then(function(data) {
+            d3.json("data.json").then(function(data) {
 
-                let countries = data.countries;
+                let countries = data.countries
                 let countryDropdown = d3.select("#selCountry");
+
                 for (let i=0; i<countries.length; i++) {
-                    countryDropdown.append("option").text(countries[i]);
+                    countryDropdown.append("option").text(countries[i].Country);
                 };
 
                 selectedCountry = countryDropdown.property("value");
@@ -211,7 +216,6 @@
                 for (let i=1921; i<=2021; i++) {
                     years.push([i]);
                 };
-
                 
                 let yearDropdown = d3.select("#selYear");
                 for (let i=0; i<years.length; i++) {
@@ -226,7 +230,7 @@
 
         //Function on option change
         function optionChanged() {
-            d3.json("output.json").then(function(data) {
+            d3.json("data.json").then(function(data) {
 
                 buildCharts();
             });
