@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emission Data</title>
+    <title>CO2 Emission Data</title>
     <link rel="stylesheet" href="style.css">
     <!--https://www.w3schools.com/html/html_css.asp-->
     <!--https://stackoverflow.com/questions/39476292/align-select-boxes-and-text-boxes-->
@@ -15,10 +15,21 @@
     <div class="container">
 
         <div id="heading">
-            <h1 id="title">Emission Data</h1>
+            <h1 id="title">CO2 Emission Data</h1>
             <p id="subtitle">Use the interactive charts below to explore the dataset</p>
         </div>
 
+        <div id="bubble-info">
+            <div id="bubble-heading">
+                <p>Global CO2 Emissions</p>
+            </div>
+            <div id="bubble-year">
+                <select onchange="optionChanged(this.value)"></select>
+            </div>
+            <div id="bubble-plot"></div>
+        </div>
+
+        <div id="country-focus">
         <div class="dropdown">
             <p class="dropdown-title">Country</p>
             <select id="selCountry" class="selDataset" onchange="optionChanged(this.value)"></select>
@@ -38,8 +49,11 @@
         <div id="scatter"></div>
 
         <div id="pie"></div>
+        </div>
 
-        <div id="bubble"></div>
+
+
+
 
     </div>
 
@@ -198,6 +212,7 @@
                         size : emissions,
                         color : colors
                     },
+                    //https://plotly.com/javascript/hover-text-and-formatting/
                     hovertemplate : "<i>%{text}</i>" +
                                     "<br>" +
                                     "Population: %{x}" +
@@ -218,7 +233,7 @@
 
                 let trace3Data = [trace3];
 
-                Plotly.newPlot("bubble", trace3Data, layout3);
+                Plotly.newPlot("bubble-plot", trace3Data, layout3);
 
             });
 
