@@ -24,7 +24,7 @@
                 <p>Global CO2 Emissions</p>
             </div>
             <div id="bubble-year">
-                <select onchange="optionChanged(this.value)"></select>
+                <select id="selBubbleYear" onchange="optionChanged(this.value)"></select>
             </div>
             <div id="bubble-plot"></div>
         </div>
@@ -37,12 +37,12 @@
 
             <div class="panel">
                 <p class="panel-title">Country</p>
-                <select id="selCountry" class="selDataset" onchange="optionChanged(this.value)"></select>
+                <select id="selCountry" class="selDataset2" onchange="optionChanged(this.value)"></select>
             </div>
 
             <div class="panel">
                 <p class="panel-title">Year</p>
-                <select id="selYear" class="selDataset" onchange="optionChanged(this.value)"></select>
+                <select id="selYear" class="selDataset2" onchange="optionChanged(this.value)"></select>
             </div>
 
             <div class="panel">
@@ -82,85 +82,8 @@
                 let countryData = data.countries
 
                 let selectedYear = d3.select("#selYear").property("value");
+                let selectedBubbleYear = d3.select("#selBubbleYear").property("value");
                 let selectedCountry = d3.select("#selCountry").property("value");
-
-                //Pie Chart
-                let pieLabels = ["Cement", "Coal", "Flaring", "Gas", "Oil", "Other"]
-                let pieData = []
-
-                for (let i=0; i<emissionData.length; i++) {
-                    if (emissionData[i].Country == selectedCountry & emissionData[i].Year == selectedYear) {
-                        pieData.push(emissionData[i].Total);
-                        pieData.push(emissionData[i].Cement);
-                        pieData.push(emissionData[i].Coal);
-                        pieData.push(emissionData[i].Flaring);
-                        pieData.push(emissionData[i].Gas);
-                        pieData.push(emissionData[i].Oil);
-                        pieData.push(emissionData[i].Other);
-                    }
-                };
-
-                d3.select("#pie").html("");
-
-                if (pieData[0] == undefined | pieData[0] == 0) {
-                    //https://stackoverflow.com/questions/6840326/how-can-i-create-and-style-a-div-using-javascript
-                    let pieDiv = document.createElement("div");
-                    pieDiv.innerHTML = "Data Unavailable";
-                    pieDiv.setAttribute("class", "plot-text");
-                    pie.appendChild(pieDiv);
-
-                    d3.select("#emissions-panel-info").text("N/A");
-                }
-                else {
-                    let trace1 = {
-                    values : pieData.slice(1,6),
-                    labels : pieLabels,
-                    type : "pie"
-                    };
-
-                    let trace1data = [trace1];
-
-                    let layout1 = {
-                        title : `Emissions in ${selectedYear}`
-                    };
-
-                    //https://plotly.com/javascript/pie-charts/
-                    Plotly.newPlot("pie", trace1data, layout1);
-
-                    d3.select("#emissions-panel-info").text(pieData[0]);
-                }
-
-                //Scatter Graph
-                emissions = []
-                years =[]
-
-                for (let i=0; i<emissionData.length; i++) {
-                    if (emissionData[i].Country == selectedCountry) {
-                        emissions.push(emissionData[i].Total);
-                        years.push(emissionData[i].Year);
-                    }
-                };
-                
-                let trace2 = {
-                    x : years,
-                    y : emissions,
-                    type : "scatter",
-                    mode : "markers"
-                };
-
-                let layout2 = {
-                    title : "Total Emissions Over The Last 100 Years",
-                    xaxis : {
-                        title : "Year"
-                    },
-                    yaxis : {
-                        title : "Total Emissions (MtCO2)"
-                    }
-                };
-
-                let trace2Data = [trace2];
-
-                Plotly.newPlot("scatter", trace2Data, layout2);
 
                 //Bubble Chart
                 gdps = [];
@@ -174,13 +97,13 @@
 
                     let country = countryData[i].Country;
 
-                    gdps.push(gdpData[i]["2020"]);
-                    populations.push(populationData[i]["2020 Population"]);
+                    gdps.push(gdpData[i][selectedBubbleYear]);
+                    populations.push(populationData[i][`${selectedBubbleYear} Population`]);
                     countries.push(country);
                     continents.push(countryData[i].Continent);
 
                     for (let j=0; j<emissionData.length; j++) {
-                        if (emissionData[j].Country == country & emissionData[j].Year == 2020) {
+                        if (emissionData[j].Country == country & emissionData[j].Year == selectedBubbleYear) {
                         emissions.push(Math.sqrt(emissionData[j].Total));
                         }
                     };
@@ -245,8 +168,85 @@
 
                 Plotly.newPlot("bubble-plot", trace3Data, layout3);
 
-            });
+                //Scatter Graph
+                emissions = []
+                years =[]
 
+                for (let i=0; i<emissionData.length; i++) {
+                    if (emissionData[i].Country == selectedCountry) {
+                        emissions.push(emissionData[i].Total);
+                        years.push(emissionData[i].Year);
+                    }
+                };
+                
+                let trace2 = {
+                    x : years,
+                    y : emissions,
+                    type : "scatter",
+                    mode : "line"
+                };
+
+                let layout2 = {
+                    title : "Total Emissions Over The Last 100 Years",
+                    xaxis : {
+                        title : "Year"
+                    },
+                    yaxis : {
+                        title : "Total Emissions (MtCO2)"
+                    }
+                };
+
+                let trace2Data = [trace2];
+
+                Plotly.newPlot("scatter", trace2Data, layout2);
+
+                //Pie Chart
+                let pieLabels = ["Cement", "Coal", "Flaring", "Gas", "Oil", "Other"]
+                let pieData = []
+
+                for (let i=0; i<emissionData.length; i++) {
+                    if (emissionData[i].Country == selectedCountry & emissionData[i].Year == selectedYear) {
+                        pieData.push(emissionData[i].Total);
+                        pieData.push(emissionData[i].Cement);
+                        pieData.push(emissionData[i].Coal);
+                        pieData.push(emissionData[i].Flaring);
+                        pieData.push(emissionData[i].Gas);
+                        pieData.push(emissionData[i].Oil);
+                        pieData.push(emissionData[i].Other);
+                    }
+                };
+
+
+                d3.select("#pie").html("");
+
+                if (pieData[0] == undefined | pieData[0] == 0) {
+                    //https://stackoverflow.com/questions/6840326/how-can-i-create-and-style-a-div-using-javascript
+                    let pieDiv = document.createElement("div");
+                    pieDiv.innerHTML = "Data Unavailable";
+                    pieDiv.setAttribute("class", "plot-text");
+                    pie.appendChild(pieDiv);
+
+                    d3.select("#emissions-panel-info").text("N/A");
+                }
+                else {
+                    let trace1 = {
+                    values : pieData.slice(1,6),
+                    labels : pieLabels,
+                    type : "pie"
+                    };
+
+                    let trace1data = [trace1];
+
+                    let layout1 = {
+                        title : `Emissions in ${selectedYear}`
+                    };
+
+                    //https://plotly.com/javascript/pie-charts/
+                    Plotly.newPlot("pie", trace1data, layout1);
+
+                    d3.select("#emissions-panel-info").text(pieData[0]);
+                }              
+            });
         }
     
         //Function to initialise dashboard
@@ -255,7 +255,7 @@
 
                 let countries = data.countries
                 let countryDropdown = d3.select("#selCountry");
-
+                
                 for (let i=0; i<countries.length; i++) {
                     countryDropdown.append("option").text(countries[i].Country);
                 };
@@ -273,7 +273,15 @@
                     yearDropdown.append("option").text(years[i]);
                 };
 
+                bubbleYears = [1970, 1980, 1990, 2000, 2010, 2020];
+
+                let bubbleYearDropdown = d3.select("#selBubbleYear");
+                for (let i=0; i<bubbleYears.length; i++) {
+                    bubbleYearDropdown.append("option").text(bubbleYears[i]);
+                };
+
                 selectedYear = yearDropdown.property("value");
+                selectedBubbleYear = bubbleYearDropdown.property("value");
 
                 buildCharts();
             });
