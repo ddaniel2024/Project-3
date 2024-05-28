@@ -198,7 +198,12 @@
                         size : emissions,
                         color : colors
                     },
-                    text : emissions
+                    hovertemplate : "<i>%{text}</i>" +
+                                    "<br>" +
+                                    "Population: %{x}" +
+                                    "<br>" +
+                                    "GDP: %{y}",
+                    text : countries
                 };
 
                 let layout3 = {
