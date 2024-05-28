@@ -24,7 +24,8 @@
                 <p>Global CO2 Emissions</p>
             </div>
             <div id="bubble-year">
-                <select id="selBubbleYear" onchange="optionChanged(this.value)"></select>
+                <p class="panel-title">Year</p>
+                <select id="selBubbleYear" class="selDataset" onchange="optionChanged(this.value)"></select>
             </div>
             <div id="bubble-plot"></div>
         </div>
@@ -37,12 +38,12 @@
 
             <div class="panel">
                 <p class="panel-title">Country</p>
-                <select id="selCountry" class="selDataset2" onchange="optionChanged(this.value)"></select>
+                <select id="selCountry" class="selDataset" onchange="optionChanged(this.value)"></select>
             </div>
 
             <div class="panel">
                 <p class="panel-title">Year</p>
-                <select id="selYear" class="selDataset2" onchange="optionChanged(this.value)"></select>
+                <select id="selYear" class="selDataset" onchange="optionChanged(this.value)"></select>
             </div>
 
             <div class="panel">
@@ -60,11 +61,6 @@
 
             <div id="pie"></div>
         </div>
-
-
-
-
-
     </div>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -76,6 +72,7 @@
             d3.json("data.json").then(function(data) {
                 console.log(data);
 
+                //retrieve data from json
                 let emissionData = data.emissions;
                 let gdpData = data.gdp;
                 let populationData = data.population;
@@ -116,6 +113,7 @@
                 //let emissionsRow = emissionData.filter(findRow);
                 //console.log(emissionsRow);
 
+                //get color
                 let colors = []
 
                 for (let i=0; i<continents.length; i++) {
@@ -136,6 +134,7 @@
                 
                 };
 
+                //bubble trace
                 let trace3 = {
                     x : populations,
                     y : gdps,
@@ -215,7 +214,6 @@
                         pieData.push(emissionData[i].Other);
                     }
                 };
-
 
                 d3.select("#pie").html("");
 
