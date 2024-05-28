@@ -30,25 +30,35 @@
         </div>
 
         <div id="country-focus">
-        <div class="dropdown">
-            <p class="dropdown-title">Country</p>
-            <select id="selCountry" class="selDataset" onchange="optionChanged(this.value)"></select>
-        </div>
 
-        <div class="dropdown">
-            <p class="dropdown-title">Year</p>
-            <select id="selYear" class="selDataset" onchange="optionChanged(this.value)"></select>
-        </div>
+            <div id="country-focus-heading">
+                <p>Country-focused CO2 Emissions</p>
+            </div>
 
-        <div id="info">
-            <p class="dropdown-title">Total Emissions</p>
-            <p class="total-emissions"></p>
-            <p class="dropdown-subtitle">MtCO2</p>
-        </div>
+            <div class="panel">
+                <p class="panel-title">Country</p>
+                <select id="selCountry" class="selDataset" onchange="optionChanged(this.value)"></select>
+            </div>
 
-        <div id="scatter"></div>
+            <div class="panel">
+                <p class="panel-title">Year</p>
+                <select id="selYear" class="selDataset" onchange="optionChanged(this.value)"></select>
+            </div>
 
-        <div id="pie"></div>
+            <div class="panel">
+                <p class="panel-title">Total Emissions</p>
+                <p id="emissions-panel-info"></p>
+                <p class="panel-subtitle">MtCO2</p>
+            </div>
+
+            <div class="panel">
+                <p class="panel-title">Greatest Contributor</p>
+                <p id="contributor-panel-info"></p>
+            </div>
+
+            <div id="scatter"></div>
+
+            <div id="pie"></div>
         </div>
 
 
@@ -99,7 +109,7 @@
                     pieDiv.setAttribute("class", "plot-text");
                     pie.appendChild(pieDiv);
 
-                    d3.select(".total-emissions").text("N/A");
+                    d3.select("#emissions-panel-info").text("N/A");
                 }
                 else {
                     let trace1 = {
@@ -117,7 +127,7 @@
                     //https://plotly.com/javascript/pie-charts/
                     Plotly.newPlot("pie", trace1data, layout1);
 
-                    d3.select(".total-emissions").text(pieData[0]);
+                    d3.select("#emissions-panel-info").text(pieData[0]);
                 }
 
                 //Scatter Graph
