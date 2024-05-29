@@ -25,7 +25,7 @@
 
 /*bubble*/
 #bubble-info {
-    width: 100%;
+    width: 2000px;
     height: 600px;
 
     border : 10px white;
@@ -206,6 +206,26 @@
     background-color: white;
 }
 
+@media (max-width: 960px) {
+    #bubble-year {
+        flex: 50%;
+        max-width: 50%
+    }
+
+    #country-focus {
+        height: 1100px
+    }
+
+    #scatter {
+        flex: 50%;
+    }
+
+    #pie {
+        flex: 50%
+    }
+
+
+}
 
 
 
