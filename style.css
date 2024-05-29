@@ -43,7 +43,7 @@
     align-items: center;
 }
 
-.sub-heading {
+.subheading {
     width: 90%;
     height: 20px;
 
@@ -203,7 +203,7 @@
     font-size: x-small;
 }
 
-.selDataset {
+.sel-dataset {
     width : 50%;
 
     margin-top: 10px;
