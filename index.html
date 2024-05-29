@@ -39,7 +39,7 @@
                     <select id="sel-bar-emission" class="sel-dataset" onchange="optionChanged(this.value)"></select>
                 </div>
             </div>
-            <div id="bar-plot"></div>
+            <div id="bar"></div>
         </div>
 
         <div id="country-focus-info">
@@ -188,23 +188,38 @@
 
                 let sliedEmissionsRow = sortedEmissionsRow.slice(0,10);
 
+                //Clear selected section of any previous data
+                d3.select("#bar").html("");
+
                 //Generate barplot
-                let barTrace = {
-                    x : sliedEmissionsRow.map(object => object.Country),
-                    y : sliedEmissionsRow.map(object => object[selectedBarEmission]),
-                    type : "bar"
-                };
-                
-                let barTraceData = [barTrace];
+                //Conditional: if there is no data availalbe, an error message is displayed; if not, the data is displayed
+                if (sliedEmissionsRow == 0) {
+                    //A new div is created to display the error message
+                    let barDiv = document.createElement("div");
+                    barDiv.innerHTML = "Data Unavailable";
+                    barDiv.setAttribute("class", "plot-text");
+                    bar.appendChild(barDiv);
 
-                let barLayout = {
-                    title : `Top 10 ${selectedBarEmission} Emissions in ${selectedBarYear}`,
-                    yaxis : {
-                        title : "MTCO2"
-                    }
-                };
+                }
+                else {
+                    //Generate bar chart           
+                    let barTrace = {
+                        x : sliedEmissionsRow.map(object => object.Country),
+                        y : sliedEmissionsRow.map(object => object[selectedBarEmission]),
+                        type : "bar"
+                    };
+                    
+                    let barTraceData = [barTrace];
 
-                Plotly.newPlot("bar-plot", barTraceData, barLayout);
+                    let barLayout = {
+                        title : `Top 10 ${selectedBarEmission} Emissions in ${selectedBarYear}`,
+                        yaxis : {
+                            title : "MTCO2"
+                        }
+                    };
+
+                    Plotly.newPlot("bar", barTraceData, barLayout);
+                }
 
                 //Scatter Graph
                 //Establish empty arrays for scatter graph
@@ -291,7 +306,7 @@
 
                     //Data is also displayed on the emissions info panel
                     d3.select("#emissions-panel-info").text(pieData[0]);
-                }              
+                }
             });
         }
     
