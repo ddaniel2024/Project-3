@@ -1,0 +1,11 @@
+Code Sources
+Style : aligning divs https://stackoverflow.com/questions/39476292/align-select-boxes-and-text-boxes
+Dot notation https://stackoverflow.com/questions/29888256/using-integer-keys-with-dot-notation-to-access-property-in-javascript-objects
+Plotly.js Hover info https://plotly.com/javascript/hover-text-and-formatting/
+Creating and styling new divs https://stackoverflow.com/questions/6840326/how-can-i-create-and-style-a-div-using-javascript
+Plotly.js pie charts https://plotly.com/javascript/pie-charts/
+CSS comments https://www.w3schools.com/css/css_comments.asp
+CSS styling   https://www.w3schools.com/html/html_css.asp
+Convert python to json https://sparkbyexamples.com/python/convert-python-list-to-json/
+json formatting https://stackoverflow.com/questions/60029873/pandas-to-json-redundant-backslashes
+flex box https://www.w3schools.com/css/css3_flexbox.asp

@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CO2 Emission Data</title>
     <link rel="stylesheet" href="style.css">
-    <!--https://www.w3schools.com/html/html_css.asp-->
-    <!--https://stackoverflow.com/questions/39476292/align-select-boxes-and-text-boxes-->
 </head>
 
 <body>
@@ -20,9 +18,11 @@
         </div>
 
         <div id="global-info">
+
             <div class="subheading">
                 <p>Global CO2 Emissions</p>
             </div>
+
             <div id="bubble-year">
                 <p class="panel-title">Year</p>
                 <select id="sel-bubble-year" class="sel-dataset" onchange="optionChanged(this.value)"></select>
@@ -84,26 +84,28 @@
             d3.json("data.json").then(function(data) {
                 console.log(data);
 
-                //retrieve data from json
+                //Retrieve data from json
                 let emissionData = data.emissions;
                 let gdpData = data.gdp;
                 let populationData = data.population;
                 let countryData = data.countries
 
-                let selectedYear = d3.select("#sel-global-year").property("value");
                 let selectedBubbleYear = d3.select("#sel-bubble-year").property("value");
                 let selectedBarYear = d3.select("#sel-bar-year").property("value");
                 let selectedBarEmission = d3.select("#sel-bar-emission").property("value");
+
                 let selectedCountry = d3.select("#sel-global-country").property("value");
+                let selectedYear = d3.select("#sel-global-year").property("value");
 
                 //Bubble Chart
+                //Establish empty arrays for bubble chart
                 gdps = [];
                 populations = [];
                 countries = [];
                 continents = [];
                 emissions = [];
 
-                //https://stackoverflow.com/questions/29888256/using-integer-keys-with-dot-notation-to-access-property-in-javascript-objects
+                //Populate arrays with a "for" loop
                 for (let i=0; i<countryData.length; i++) {
 
                     let country = countryData[i].Country;
@@ -120,7 +122,7 @@
                     };
                 };
 
-                //get color
+                //Get color using the "continents" array
                 let colors = []
 
                 for (let i=0; i<continents.length; i++) {
@@ -141,8 +143,8 @@
                 
                 };
 
-                //bubble trace
-                let trace3 = {
+                //Generate bubble chart
+                let bubbleTrace = {
                     x : populations,
                     y : gdps,
                     type : "scatter",
@@ -151,7 +153,6 @@
                         size : emissions,
                         color : colors
                     },
-                    //https://plotly.com/javascript/hover-text-and-formatting/
                     hovertemplate : "<i>%{text}</i>" +
                                     "<br>" +
                                     "Population: %{x}" +
@@ -160,7 +161,7 @@
                     text : countries
                 };
 
-                let layout3 = {
+                let bubbleLayout = {
                     xaxis : {
                         title : "Population",
                     },
@@ -170,24 +171,27 @@
             
                 };
 
-                let trace3Data = [trace3];
+                let bubbleTraceData = [bubbleTrace];
 
-                Plotly.newPlot("bubble-plot", trace3Data, layout3);
+                Plotly.newPlot("bubble-plot", bubbleTraceData, bubbleLayout);
 
-                //barplot
+                //Barplot
+                //Use a function to find the rows of data that match the selected year
                 function findRow(row) {
                 return (row.Year == selectedBarYear)
                 };
 
+                //Filter, sort, and slice the data to obtain a "Top 10" array
                 let emissionsRow = emissionData.filter(findRow);
 
-                let emissionsRowSort = emissionsRow.sort((a,b) => b[selectedBarEmission] - a[selectedBarEmission]);
+                let sortedEmissionsRow = emissionsRow.sort((a,b) => b[selectedBarEmission] - a[selectedBarEmission]);
 
-                let emissionsRowSortSlice = emissionsRowSort.slice(0,10);
+                let sliedEmissionsRow = sortedEmissionsRow.slice(0,10);
 
+                //Generate barplot
                 let barTrace = {
-                    x : emissionsRowSortSlice.map(object => object.Country),
-                    y : emissionsRowSortSlice.map(object => object[selectedBarEmission]),
+                    x : sliedEmissionsRow.map(object => object.Country),
+                    y : sliedEmissionsRow.map(object => object[selectedBarEmission]),
                     type : "bar"
                 };
                 
@@ -203,9 +207,11 @@
                 Plotly.newPlot("bar-plot", barTraceData, barLayout);
 
                 //Scatter Graph
+                //Establish empty arrays for scatter graph
                 emissions = []
                 years =[]
 
+                //Populate arrays with a "for" loop
                 for (let i=0; i<emissionData.length; i++) {
                     if (emissionData[i].Country == selectedCountry) {
                         emissions.push(emissionData[i].Total);
@@ -213,6 +219,7 @@
                     }
                 };
                 
+                //Generate scatter graph
                 let trace2 = {
                     x : years,
                     y : emissions,
@@ -235,9 +242,11 @@
                 Plotly.newPlot("scatter", trace2Data, layout2);
 
                 //Pie Chart
+                //Establish an array for emission types (labels), and an blank array for the data
                 let pieLabels = ["Cement", "Coal", "Flaring", "Gas", "Oil", "Other"]
                 let pieData = []
 
+                //Populate the blank array with a "for" loop
                 for (let i=0; i<emissionData.length; i++) {
                     if (emissionData[i].Country == selectedCountry & emissionData[i].Year == selectedYear) {
                         pieData.push(emissionData[i].Total);
@@ -250,33 +259,37 @@
                     }
                 };
 
+                //Clear selected section of any previous data
                 d3.select("#pie").html("");
 
+                //Conditional: if there is no data availalbe, an error message is displayed; if not, the data is displayed
                 if (pieData[0] == undefined | pieData[0] == 0) {
-                    //https://stackoverflow.com/questions/6840326/how-can-i-create-and-style-a-div-using-javascript
+                    //A new div is created to display the error message
                     let pieDiv = document.createElement("div");
                     pieDiv.innerHTML = "Data Unavailable";
                     pieDiv.setAttribute("class", "plot-text");
                     pie.appendChild(pieDiv);
 
+                    //Error message is also displayed on the emissions info panel
                     d3.select("#emissions-panel-info").text("N/A");
                 }
                 else {
-                    let trace1 = {
+                    //Generate pie chart
+                    let pieTrace = {
                     values : pieData.slice(1,6),
                     labels : pieLabels,
                     type : "pie"
                     };
 
-                    let trace1data = [trace1];
+                    let pieTraceData = [pieTrace];
 
-                    let layout1 = {
+                    let pieLayout = {
                         title : `Emissions in ${selectedYear}`
                     };
 
-                    //https://plotly.com/javascript/pie-charts/
-                    Plotly.newPlot("pie", trace1data, layout1);
+                    Plotly.newPlot("pie", pieTraceData, pieLayout);
 
+                    //Data is also displayed on the emissions info panel
                     d3.select("#emissions-panel-info").text(pieData[0]);
                 }              
             });
@@ -336,7 +349,7 @@
 
                 //Appened options for barplot years
                 let barYearDropdown = d3.select("#sel-bar-year");
-                
+
                 for (let i=0; i<years.length; i++) {
                     barYearDropdown.append("option").text(years[i]);
                 };
