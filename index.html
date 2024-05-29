@@ -19,8 +19,8 @@
             <p id="subtitle">Use the interactive charts below to explore the dataset</p>
         </div>
 
-        <div id="bubble-info">
-            <div id="bubble-heading">
+        <div id="global-info">
+            <div class="sub-heading">
                 <p>Global CO2 Emissions</p>
             </div>
             <div id="bubble-year">
@@ -29,14 +29,20 @@
             </div>
             <div id="bubble-plot"></div>
 
-            <div id="bar-plot">
-
+            <div id="bar-year">
+                <p class="panel-title">Year</p>
+                <select id="selBarYear" class="selDataset" onchange="optionChanged(this.value)"></select>
             </div>
+            <div id="bar-emission">
+                <p class="panel-title">Year</p>
+                <select id="selBarEmission" class="selDataset" onchange="optionChanged(this.value)"></select>
+            </div>
+            <div id="bar-plot"></div>
         </div>
 
-        <div id="country-focus">
+        <div id="country-focus-info">
 
-            <div id="country-focus-heading">
+            <div class="sub-heading">
                 <p>Country-focused CO2 Emissions</p>
             </div>
 
