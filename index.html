@@ -29,7 +29,7 @@
             </div>
             <div id="bubble-plot"></div>
 
-            <div id="bar">
+            <div id="bar-plot">
 
             </div>
         </div>
@@ -179,7 +179,24 @@
                 console.log(emissionsRowSortSlice);
 
                 barplotCountries = []
-                barplotData = []        
+                barplotData = []
+
+                for (let i=0; i<emissionsRowSortSlice.length; i++) {
+                    barplotCountries.push(emissionsRowSortSlice[i].Country)
+                    barplotData.push(emissionsRowSortSlice[i].Coal)
+                }
+
+                let barTrace = {
+                    x : barplotCountries,
+                    y : barplotData,
+                    type : "bar"
+                };
+                
+                let barTraceData = [barTrace];
+
+                Plotly.newPlot("bar-plot", barTraceData);
+
+                console.log(barplotCountries);
 
                 //Scatter Graph
                 emissions = []

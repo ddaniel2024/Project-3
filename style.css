@@ -88,11 +88,9 @@
 
 /*bar*/
 
-#bar {
+#bar-plot {
     width: 45%;
     height: 400px;
-
-    background-color: red;
 }
 
 /*country focus*/
