@@ -29,13 +29,15 @@
             </div>
             <div id="bubble-plot"></div>
 
-            <div id="bar-year">
-                <p class="panel-title">Year</p>
-                <select id="selBarYear" class="selDataset" onchange="optionChanged(this.value)"></select>
-            </div>
-            <div id="bar-emission">
-                <p class="panel-title">Year</p>
-                <select id="selBarEmission" class="selDataset" onchange="optionChanged(this.value)"></select>
+            <div id="bar-selectors">
+                <div id="bar-year">
+                    <p class="panel-title">Year</p>
+                    <select id="selBarYear" class="selDataset" onchange="optionChanged(this.value)"></select>
+                </div>
+                <div id="bar-emission">
+                    <p class="panel-title">Emission Type</p>
+                    <select id="selBarEmission" class="selDataset" onchange="optionChanged(this.value)"></select>
+                </div>
             </div>
             <div id="bar-plot"></div>
         </div>
@@ -90,6 +92,8 @@
 
                 let selectedYear = d3.select("#selYear").property("value");
                 let selectedBubbleYear = d3.select("#selBubbleYear").property("value");
+                let selectedBarYear = d3.select("#selBarYear").property("value");
+                let selectedBarEmission = d3.select("#selBarEmission").property("value");
                 let selectedCountry = d3.select("#selCountry").property("value");
 
                 //Bubble Chart
@@ -172,37 +176,25 @@
 
                 //barplot
                 function findRow(row) {
-                return (row.Year == 2020)
+                return (row.Year == selectedBarYear)
                 };
 
                 let emissionsRow = emissionData.filter(findRow);
-                console.log(emissionsRow);
 
-                let emissionsRowSort = emissionsRow.sort((a,b) => b.Coal - a.Coal);
-                console.log(emissionsRowSort);
+                let emissionsRowSort = emissionsRow.sort((a,b) => b[selectedBarEmission] - a[selectedBarEmission]);
 
-                emissionsRowSortSlice = emissionsRowSort.slice(0,10);
-                console.log(emissionsRowSortSlice);
-
-                barplotCountries = []
-                barplotData = []
-
-                for (let i=0; i<emissionsRowSortSlice.length; i++) {
-                    barplotCountries.push(emissionsRowSortSlice[i].Country)
-                    barplotData.push(emissionsRowSortSlice[i].Coal)
-                }
+                let emissionsRowSortSlice = emissionsRowSort.slice(0,10);
 
                 let barTrace = {
-                    x : barplotCountries,
-                    y : barplotData,
+                    x : emissionsRowSortSlice.map(object => object.Country),
+                    y : emissionsRowSortSlice.map(object => object[selectedBarEmission]),
                     type : "bar"
                 };
                 
                 let barTraceData = [barTrace];
 
                 Plotly.newPlot("bar-plot", barTraceData);
-
-                console.log(barplotCountries);
+                console.log(emissionsRowSortSlice);
 
                 //Scatter Graph
                 emissions = []
@@ -317,6 +309,22 @@
 
                 selectedYear = yearDropdown.property("value");
                 selectedBubbleYear = bubbleYearDropdown.property("value");
+
+                let barEmissions = ["Cement", "Coal", "Flaring", "Gas", "Oil", "Other", "Total"];
+
+                let barEmissionDropdown = d3.select("#selBarEmission");
+                for (let i=0; i<barEmissions.length; i++) {
+                    barEmissionDropdown.append("option").text(barEmissions[i]);
+                };
+
+                let selectedBarEmission = barEmissionDropdown.property("value");
+
+                let barYearDropdown = d3.select("#selBarYear");
+                for (let i=0; i<years.length; i++) {
+                    barYearDropdown.append("option").text(years[i]);
+                };
+
+                let selectedBarYear = barYearDropdown.property("value");
 
                 buildCharts();
             });

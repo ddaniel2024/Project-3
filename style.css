@@ -79,9 +79,9 @@
     align-items: center;
 }
 
-#bar-year {
+#bar-selectors {
     width : 10%;
-    height : 100px;
+    height : 200px;
 
     border-radius: 20px;
     margin : 10px;
@@ -95,12 +95,27 @@
     align-items: center;
 }
 
-#bar-emission {
-    width : 10%;
+#bar-year {
+    width : 100%;
     height : 100px;
 
     border-radius: 20px;
-    margin : 10px;
+
+    background-color: white;
+
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#bar-emission {
+    width : 100%;
+    height : 100px;
+
+    border-radius: 20px;
+    margin-bottom: 5px;
 
     background-color: white;
 
@@ -122,7 +137,7 @@
 
 /*bar*/
 #bar-plot {
-    width: 45%;
+    width: 60%;
     height: 400px;
 }
 
