@@ -28,6 +28,10 @@
                 <select id="selBubbleYear" class="selDataset" onchange="optionChanged(this.value)"></select>
             </div>
             <div id="bubble-plot"></div>
+
+            <div id="bar">
+
+            </div>
         </div>
 
         <div id="country-focus">
@@ -106,13 +110,6 @@
                     };
                 };
 
-                //function findRow(row) {
-                //return row.Year == 2020
-                //};
-
-                //let emissionsRow = emissionData.filter(findRow);
-                //console.log(emissionsRow);
-
                 //get color
                 let colors = []
 
@@ -166,6 +163,23 @@
                 let trace3Data = [trace3];
 
                 Plotly.newPlot("bubble-plot", trace3Data, layout3);
+
+                //barplot
+                function findRow(row) {
+                return (row.Year == 2020)
+                };
+
+                let emissionsRow = emissionData.filter(findRow);
+                console.log(emissionsRow);
+
+                let emissionsRowSort = emissionsRow.sort((a,b) => b.Coal - a.Coal);
+                console.log(emissionsRowSort);
+
+                emissionsRowSortSlice = emissionsRowSort.slice(0,10);
+                console.log(emissionsRowSortSlice);
+
+                barplotCountries = []
+                barplotData = []        
 
                 //Scatter Graph
                 emissions = []
