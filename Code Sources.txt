@@ -9,3 +9,4 @@ CSS styling   https://www.w3schools.com/html/html_css.asp
 Convert python to json https://sparkbyexamples.com/python/convert-python-list-to-json/
 json formatting https://stackoverflow.com/questions/60029873/pandas-to-json-redundant-backslashes
 flex box https://www.w3schools.com/css/css3_flexbox.asp
+replacing '' with 0 https://stackoverflow.com/questions/38569851/pandas-replace-empty-cell-to-0
