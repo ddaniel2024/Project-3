@@ -10,3 +10,6 @@ Convert python to json https://sparkbyexamples.com/python/convert-python-list-to
 json formatting https://stackoverflow.com/questions/60029873/pandas-to-json-redundant-backslashes
 flex box https://www.w3schools.com/css/css3_flexbox.asp
 replacing '' with 0 https://stackoverflow.com/questions/38569851/pandas-replace-empty-cell-to-0
+seaborn setting axis labels https://stackoverflow.com/questions/31632637/label-axes-on-seaborn-barplot
+seaborn xtick rotation https://stackoverflow.com/questions/26540035/rotate-label-text-in-seaborn
+seaborn colors https://python-charts.com/ranking/bar-plot-seaborn/?utm_content=cmp-true
