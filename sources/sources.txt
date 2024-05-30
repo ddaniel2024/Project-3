@@ -1,2 +1,0 @@
-https://www.kaggle.com/datasets/zgrcemta/world-gdpgdp-gdp-per-capita-and-annual-growths
-https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset
