@@ -2,7 +2,7 @@
 
 ## Visualising CO2 emission data from 205 countries around the world, over the last 100 years.
 
-JavaScript is used to create an interactive, user friendly dashboard, to visualise various types of CO2 emission data from 205 countries.
+JavaScript is used to create an interactive, user friendly dashboard, to visualise various types of CO2 emission data from 205 countries. The effects of GDP and Population are also briefly explored.
 
 The datasets are sourced here (obtained via Kaggle):
 * [The Global Carbon Project's fossil CO2 emissions dataset, from Zenodo.org](https://zenodo.org/records/7215364) ([kaggle link](https://www.kaggle.com/datasets/thedevastator/global-fossil-co2-emissions-by-country-2002-2022/data))
