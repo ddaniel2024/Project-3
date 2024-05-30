@@ -123,7 +123,7 @@
                 };
 
                 //Get color using the "continents" array
-                let colors = []
+                colors = []
 
                 for (let i=0; i<continents.length; i++) {
                     
@@ -171,7 +171,7 @@
             
                 };
 
-                let bubbleTraceData = [bubbleTrace];
+                bubbleTraceData = [bubbleTrace];
 
                 Plotly.newPlot("bubble-plot", bubbleTraceData, bubbleLayout);
 
@@ -247,14 +247,14 @@
                     }
                 };
 
-                let lineData = [lineTrace];
+                lineData = [lineTrace];
 
                 Plotly.newPlot("line", lineData, lineLayout);
 
                 //Pie Chart
                 //Establish an array for emission types (labels), and an blank array for the data
-                let pieLabels = ["Cement", "Coal", "Flaring", "Gas", "Oil", "Other"]
-                let pieData = []
+                pieLabels = ["Cement", "Coal", "Flaring", "Gas", "Oil", "Other"]
+                pieData = []
 
                 //Populate the blank array with a "for" loop
                 for (let i=0; i<emissionData.length; i++) {
