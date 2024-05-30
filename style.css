@@ -238,8 +238,8 @@
     text-align: center;
 }
 
-/*scatter*/
-#scatter {
+/*line*/
+#line {
     width : 45%;
     height : 400px;
 
@@ -259,7 +259,7 @@
         height: 1100px
     }
 
-    #scatter {
+    #line {
         flex: 50%;
     }
 

@@ -69,7 +69,7 @@
                 <p id="contributor-panel-info"></p>
             </div>
 
-            <div id="scatter"></div>
+            <div id="line"></div>
 
             <div id="pie"></div>
         </div>
@@ -177,12 +177,12 @@
 
                 //Barplot
                 //Use a function to find the rows of data that match the selected year
-                function findRow(row) {
+                function findYear(row) {
                 return (row.Year == selectedBarYear)
                 };
 
                 //Filter, sort, and slice the data to obtain a "Top 10" array
-                let emissionsRow = emissionData.filter(findRow);
+                let emissionsRow = emissionData.filter(findYear);
 
                 let sortedEmissionsRow = emissionsRow.sort((a,b) => b[selectedBarEmission] - a[selectedBarEmission]);
 
@@ -221,28 +221,23 @@
                     Plotly.newPlot("bar", barTraceData, barLayout);
                 }
 
-                //Scatter Graph
-                //Establish empty arrays for scatter graph
-                emissions = []
-                years =[]
-
-                //Populate arrays with a "for" loop
-                for (let i=0; i<emissionData.length; i++) {
-                    if (emissionData[i].Country == selectedCountry) {
-                        emissions.push(emissionData[i].Total);
-                        years.push(emissionData[i].Year);
-                    }
+                //Line Graph
+                //Use a function to find the rows of data that match the selected country
+                function findCountry(row) {
+                return (row.Country == selectedCountry)
                 };
-                
-                //Generate scatter graph
-                let trace2 = {
-                    x : years,
-                    y : emissions,
+
+                let lineDataArray = emissionData.filter(findCountry);
+
+                //Generate line graph
+                let lineTrace = {
+                    x : lineDataArray.map(object => object.Year),
+                    y : lineDataArray.map(object => object.Total),
                     type : "scatter",
                     mode : "line"
                 };
 
-                let layout2 = {
+                let lineLayout = {
                     title : "Total Emissions Over The Last 100 Years",
                     xaxis : {
                         title : "Year"
@@ -252,9 +247,9 @@
                     }
                 };
 
-                let trace2Data = [trace2];
+                let lineData = [lineTrace];
 
-                Plotly.newPlot("scatter", trace2Data, layout2);
+                Plotly.newPlot("line", lineData, lineLayout);
 
                 //Pie Chart
                 //Establish an array for emission types (labels), and an blank array for the data
