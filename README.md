@@ -5,7 +5,7 @@
 JavaScript is used to create an interactive, user friendly dashboard, to visualise various types of CO2 emission data from 205 countries.
 
 The datasets are sourced here (obtained via Kaggle):
-    * [The Global Carbon Project's fossil CO2 emissions dataset, from Zenodo.org](https://zenodo.org/records/7215364) ([kaggle link](https://www.kaggle.com/datasets/thedevastator/global-fossil-co2-emissions-by-country-2002-2022/data))
+* [The Global Carbon Project's fossil CO2 emissions dataset, from Zenodo.org](https://zenodo.org/records/7215364) ([kaggle link](https://www.kaggle.com/datasets/thedevastator/global-fossil-co2-emissions-by-country-2002-2022/data))
     * [World Population Review](https://worldpopulationreview.com/) ([kaggle link](https://www.kaggle.com/datasets/iamsouravbanerjee/world-population-dataset))
     * [World Bank](https://data.worldbank.org/) ([kaggle link](https://www.kaggle.com/datasets/zgrcemta/world-gdpgdp-gdp-per-capita-and-annual-growths))
 
