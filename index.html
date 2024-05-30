@@ -81,7 +81,7 @@
 
         //Function to build charts
         function buildCharts() {
-            d3.json("data.json").then(function(data) {
+            d3.json("output/data.json").then(function(data) {
                 console.log(data);
 
                 //Retrieve data from json
@@ -307,7 +307,7 @@
     
         //Function to initialise dashboard
         function init() {
-            d3.json("data.json").then(function(data) {
+            d3.json("output/data.json").then(function(data) {
 
                 //Appened options for country-focused dropdown (country)
                 let countries = data.countries;
@@ -372,7 +372,7 @@
 
         //Function on option change
         function optionChanged() {
-            d3.json("data.json").then(function(data) {
+            d3.json("output/data.json").then(function(data) {
 
                 buildCharts();
             });
