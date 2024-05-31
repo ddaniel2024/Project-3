@@ -13,8 +13,8 @@
     <div class="container">
 
         <div id="heading">
-            <h1 id="title">CO2 Emission Data</h1>
-            <p id="subtitle">Use the interactive charts below to explore the dataset</p>
+            <h1>CO2 Emission Data</h1>
+            <p>Use the interactive charts below to explore the dataset</p>
         </div>
 
         <div id="global-info">
@@ -27,6 +27,7 @@
                 <p class="panel-title">Year</p>
                 <select id="sel-bubble-year" class="sel-dataset" onchange="optionChanged(this.value)"></select>
             </div>
+
             <div id="bubble-plot"></div>
 
             <div id="bar-selectors">
@@ -39,7 +40,9 @@
                     <select id="sel-bar-emission" class="sel-dataset" onchange="optionChanged(this.value)"></select>
                 </div>
             </div>
+        
             <div id="bar"></div>
+
         </div>
 
         <div id="country-focus-info">
@@ -73,6 +76,7 @@
 
             <div id="pie"></div>
         </div>
+
     </div>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
