@@ -17,10 +17,10 @@
             <p>Use the interactive charts below to explore the dataset</p>
         </div>
 
-        <div id="global-info">
+        <div class="info">
 
             <div class="subheading">
-                <p>Global CO2 Emissions</p>
+                <h3>Global CO2 Emissions</h3>
             </div>
 
             <div id="bubble-year">
@@ -40,15 +40,15 @@
                     <select id="sel-bar-emission" class="sel-dataset" onchange="optionChanged(this.value)"></select>
                 </div>
             </div>
-        
+
             <div id="bar"></div>
 
         </div>
 
-        <div id="country-focus-info">
+        <div class="info">
 
             <div class="subheading">
-                <p>Country-focused CO2 Emissions</p>
+                <h3>Country-focused CO2 Emissions</h3>
             </div>
 
             <div class="panel">
@@ -65,11 +65,6 @@
                 <p class="panel-title">Total Emissions</p>
                 <p id="emissions-panel-info"></p>
                 <p class="panel-subtitle">MtCO2</p>
-            </div>
-
-            <div class="panel">
-                <p class="panel-title">Greatest Contributor</p>
-                <p id="contributor-panel-info"></p>
             </div>
 
             <div id="line"></div>
