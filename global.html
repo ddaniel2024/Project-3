@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CO2 Emission Data</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div id="heading">
+            <h1>CO<sub>2</sub> Emission Data</h1>
+            <p>Use the interactive charts below to explore the dataset</p>
+        </div>
+
+        <div id="global-info">
+
+            <div class="subheading">
+                <h2>Global CO<sub>2</sub> Emissions</h2>
+            </div>
+
+            <div id="bubble-year">
+                <p class="panel-title">Year</p>
+                <select id="sel-bubble-year" class="sel-dataset" onchange="optionChanged(this.value)"></select>
+            </div>
+
+            <div id="bubble-plot"></div>
+
+            <div id="bar-selectors">
+                <div id="bar-year">
+                    <p class="panel-title">Year</p>
+                    <select id="sel-bar-year" class="sel-dataset" onchange="optionChanged(this.value)"></select>
+                </div>
+                <div id="bar-emission">
+                    <p class="panel-title">Emission Type</p>
+                    <select id="sel-bar-emission" class="sel-dataset" onchange="optionChanged(this.value)"></select>
+                </div>
+            </div>
+
+            <div id="bar"></div>
+
+            <div class="external-link">
+                <a href="country.html">Switch to Country Focus</a>
+            </div>
+        
+        </div>
+
+    </div>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="static/js/logic_global.js"></script>
+
+</body>
+
+</html>

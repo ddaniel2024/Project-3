@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CO2 Emission Data</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div id="heading">
+            <h1>CO<sub>2</sub> Emission Data</h1>
+            <p>Use the interactive charts below to explore the dataset</p>
+        </div>
+
+        <div id="country-info">
+
+            <div class="subheading">
+                <h2>Country-focused CO<sub>2</sub> Emissions</h2>
+            </div>
+
+            <div class="panel">
+                <p class="panel-title">Country</p>
+                <select id="sel-global-country" class="sel-dataset" onchange="optionChanged(this.value)"></select>
+            </div>
+
+            <div class="panel">
+                <p class="panel-title">Year</p>
+                <select id="sel-global-year" class="sel-dataset" onchange="optionChanged(this.value)"></select>
+            </div>
+
+            <div class="panel">
+                <p class="panel-title">Total Emissions</p>
+                <p id="emissions-panel-info"></p>
+                <p class="panel-subtitle">MtCO<sub>2</sub></p>
+            </div>
+
+            <div id="line"></div>
+
+            <div id="pie"></div>
+
+            <div class="external-link">
+                <a href="global.html">Switch to Global Focus</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="static/js/logic_country.js"></script>
+
+</body>
+
+</html>
