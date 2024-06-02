@@ -17,82 +17,33 @@ function buildCharts() {
         let lineDataArray = emissionData.filter(findCountry);
 
         //Generate line graph
-        let lineTrace1 = {
-            x : lineDataArray.map(object => object.Year),
-            y : lineDataArray.map(object => object.Cement),
-            type : "scatter",
-            mode : "line",
-            line: {
-                color: "#ffea56"
-            },
-            name: "Cement",
-        };
+        //Establish  arrays for emission types and colors
+        let emissionTypes = ["Cement", "Coal", "Flaring", "Gas", "Oil", "Other", "Total"];
+        let colors = ["#ffea56", "#36cedc", "#a587ca", "#8fe968", "#fe797b", "#ffb750", "#000000"];  
 
-        let lineTrace2 = {
-            x : lineDataArray.map(object => object.Year),
-            y : lineDataArray.map(object => object.Coal),
-            type : "scatter",
-            mode : "line",
-            line: {
-                color: "#36cedc"
-            },
-            name: "Coal"
-        };
+        //Establish empty array for trace data
+        let lineTraceData = []
 
-        let lineTrace3 = {
-            x : lineDataArray.map(object => object.Year),
-            y : lineDataArray.map(object => object.Flaring),
-            type : "scatter",
-            mode : "line",
-            line: {
-                color: "#a587ca"
-            },
-            name: "Flaring"
-        };
+        //For loop to loop through the emissions array
+        for (let i=0; i<emissionTypes.length; i++) {
+            
 
-        let lineTrace4 = {
-            x : lineDataArray.map(object => object.Year),
-            y : lineDataArray.map(object => object.Gas),
-            type : "scatter",
-            mode : "line",
-            line: {
-                color: "#8fe968"
-            },
-            name: "Gas"
-        };
+            //Generate a trace for the line chart
+            let lineTrace = {
+                x : lineDataArray.map(object => object.Year),
+                y : lineDataArray.map(object => object[emissionTypes[i]]),
+                type : "scatter",
+                mode : "line",
+                line: {
+                    //The line color corresponds to the emission type
+                    color: colors[i]
+                },
+                name: emissionTypes[i],
+            };
 
-        let lineTrace5 = {
-            x : lineDataArray.map(object => object.Year),
-            y : lineDataArray.map(object => object.Oil),
-            type : "scatter",
-            mode : "line",
-            line: {
-                color: "#fe797b"
-            },
-            name: "Oil"
-        };
-
-        let lineTrace6 = {
-            x : lineDataArray.map(object => object.Year),
-            y : lineDataArray.map(object => object.Other),
-            type : "scatter",
-            mode : "line",
-            line: {
-                color: "#ffb750"
-            },
-            name: "Other"
-        };
-
-        let lineTrace7 = {
-            x : lineDataArray.map(object => object.Year),
-            y : lineDataArray.map(object => object.Total),
-            type : "scatter",
-            mode : "line",
-            line: {
-                color: "#000000",
-            },
-            name: "Total"
-        };
+            //The trace is pushed into the empty trace data array, and the loop repeats for the next emission type
+            lineTraceData.push(lineTrace);
+        }
 
         let lineLayout = {
             title : "Emissions Over The Last 100 Years",
@@ -104,11 +55,9 @@ function buildCharts() {
             }
         };
 
-        let lineData = [lineTrace1, lineTrace2, lineTrace3, lineTrace4, lineTrace5, lineTrace6, lineTrace7];
-
         let lineConfig = {responsive: true};
 
-        Plotly.newPlot("line", lineData, lineLayout, lineConfig);
+        Plotly.newPlot("line", lineTraceData, lineLayout, lineConfig);
 
         //Pie Chart
         //Establish an array for emission types (labels), and an blank array for the data
