@@ -130,7 +130,10 @@ function buildCharts() {
             let barTrace = {
                 x : sliedEmissionsRow.map(object => object.Country),
                 y : sliedEmissionsRow.map(object => object[selectedBarEmission]),
-                type : "bar"
+                type : "bar",
+                marker : {
+                    color : "#fe797b"
+                }
             };
             
             let barTraceData = [barTrace];
