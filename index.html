@@ -195,11 +195,8 @@
                 //Generate barplot
                 //Conditional: if there is no data availalbe, an error message is displayed; if not, the data is displayed
                 if (sliedEmissionsRow == 0) {
-                    //A new div is created to display the error message
-                    let barDiv = document.createElement("div");
-                    barDiv.innerHTML = "Data Unavailable";
-                    barDiv.setAttribute("class", "plot-text");
-                    bar.appendChild(barDiv);
+
+                    bar.innerHTML = "Data Unavailable";
 
                 }
                 else {
@@ -277,11 +274,8 @@
 
                 //Conditional: if there is no data availalbe, an error message is displayed; if not, the data is displayed
                 if (pieData[0] == undefined | pieData[0] == 0) {
-                    //A new div is created to display the error message
-                    let pieDiv = document.createElement("div");
-                    pieDiv.innerHTML = "Data Unavailable";
-                    pieDiv.setAttribute("class", "plot-text");
-                    pie.appendChild(pieDiv);
+                    
+                    pie.innerHTML = "Data Unavailable";
 
                     //Error message is also displayed on the emissions info panel
                     d3.select("#emissions-panel-info").text("N/A");
