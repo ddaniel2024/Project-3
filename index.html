@@ -98,80 +98,78 @@
 
                 //Bubble Chart
                 //Establish empty arrays for bubble chart
-                gdps = [];
-                populations = [];
-                countries = [];
-                continents = [];
-                emissions = [];
+                let continents = ["Asia", "Africa", "Europe", "North America", "South America", "Oceania"];
+                let colors = ["#fe797b", "#36cedc", "#ffea56", "#3e9c16", "#8fe968", "#a587ca"];
 
-                //Populate arrays with a "for" loop
-                for (let i=0; i<countryData.length; i++) {
-
-                    let country = countryData[i].Country;
-
-                    gdps.push(gdpData[i][selectedBubbleYear]);
-                    populations.push(populationData[i][`${selectedBubbleYear} Population`]);
-                    countries.push(country);
-                    continents.push(countryData[i].Continent);
-
-                    for (let j=0; j<emissionData.length; j++) {
-                        if (emissionData[j].Country == country & emissionData[j].Year == selectedBubbleYear) {
-                        emissions.push(Math.sqrt(emissionData[j].Total));
-                        }
-                    };
-                };
-
-                //Get color using the "continents" array
-                colors = []
+                let bubbleTraceData = [];
 
                 for (let i=0; i<continents.length; i++) {
-                    
-                    let color = ""
 
-                    if ((continents[i] == "Asia") | (continents[i] == "Oceania")) {
-                        color = "red";
-                    } else if (continents[i] == "Europe") {
-                        color = "yellow"
-                    } else if (continents[i] == "Africa") {
-                        color = "blue";
-                    } else { 
-                        color = "green";
-                    }
+                    function getContinent(row) {
+                        return (row.Continent == continents[i]);
+                    };
 
-                    colors.push(color);
-                
-                };
+                    let gdps = [];
+                    let populations = [];
+                    let countries = [];
 
-                //Generate bubble chart
-                let bubbleTrace = {
-                    x : populations,
-                    y : gdps,
-                    type : "scatter",
-                    mode : "markers",
-                    marker : {
-                        size : emissions,
-                        color : colors
-                    },
-                    hovertemplate : "<i>%{text}</i>" +
+                    let emissions = [];
+
+                    let countryGdp = gdpData.filter(getContinent);
+                    let countryPopulation = populationData.filter(getContinent);
+                    let countryName = countryData.filter(getContinent);
+
+                    for (let i=0; i<countryName.length; i++) {
+                        gdps.push(countryGdp[i][selectedBubbleYear]);
+                        populations.push(countryPopulation[i][`${selectedBubbleYear} Population`]);
+
+                        let country = countryName[i].Country;
+                        countries.push(country);
+
+                        function getEmissionsRow(row) {
+                            return ((row.Country == country) & (row.Year == selectedBubbleYear));
+                        };
+
+                        let bubbleEmissionsRow = emissionData.filter(getEmissionsRow); 
+
+                        for (let i=0; i<bubbleEmissionsRow.length; i++) {
+                            emissions.push(Math.sqrt(bubbleEmissionsRow[i].Total));
+                        };
+                    };
+
+                    let bubbleTrace = {
+                        x : populations,
+                        y : gdps,
+                        type : "scatter",
+                        mode : "markers",
+                        marker : {
+                            size : emissions,
+                            color : colors[i]
+                        },
+                        hovertemplate : "<i>%{text}</i>" +
                                     "<br>" +
                                     "Population: %{x}" +
                                     "<br>" +
                                     "GDP: %{y}",
-                    text : countries
+                        text : countries,
+                        name : continents[i]
+                    };
+
+                    bubbleTraceData.push(bubbleTrace);
                 };
 
                 let bubbleLayout = {
-                    xaxis : {
-                        title : "Population",
-                    },
-                    yaxis : {
-                        title : "GDP ($)"
-                    },
-            
+                        xaxis : {
+                            title : "Population",
+                        },
+                        yaxis : {
+                            title : "GDP ($)"
+                        },
+                        legend : {
+                            itemsizing : "constant"
+                        }
                 };
-
-                let bubbleTraceData = [bubbleTrace];
-
+                
                 let bubbleConfig = {responsive: true};
 
                 Plotly.newPlot("bubble-plot", bubbleTraceData, bubbleLayout, bubbleConfig);
