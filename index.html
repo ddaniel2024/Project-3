@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CO2 Emission Data</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
 
 <body>
@@ -228,24 +228,94 @@
                 let lineDataArray = emissionData.filter(findCountry);
 
                 //Generate line graph
-                let lineTrace = {
+                let lineTrace1 = {
+                    x : lineDataArray.map(object => object.Year),
+                    y : lineDataArray.map(object => object.Cement),
+                    type : "scatter",
+                    mode : "line",
+                    line: {
+                        color: "#ffa600"
+                    },
+                    name: "Cement",
+                };
+
+                let lineTrace2 = {
+                    x : lineDataArray.map(object => object.Year),
+                    y : lineDataArray.map(object => object.Coal),
+                    type : "scatter",
+                    mode : "line",
+                    line: {
+                        color: "#ff6e54"
+                    },
+                    name: "Coal"
+                };
+
+                let lineTrace3 = {
+                    x : lineDataArray.map(object => object.Year),
+                    y : lineDataArray.map(object => object.Flaring),
+                    type : "scatter",
+                    mode : "line",
+                    line: {
+                        color: "#dd5182"
+                    },
+                    name: "Flaring"
+                };
+
+                let lineTrace4 = {
+                    x : lineDataArray.map(object => object.Year),
+                    y : lineDataArray.map(object => object.Gas),
+                    type : "scatter",
+                    mode : "line",
+                    line: {
+                        color: "#955196"
+                    },
+                    name: "Gas"
+                };
+
+                let lineTrace5 = {
+                    x : lineDataArray.map(object => object.Year),
+                    y : lineDataArray.map(object => object.Oil),
+                    type : "scatter",
+                    mode : "line",
+                    line: {
+                        color: "#444e86"
+                    },
+                    name: "Oil"
+                };
+
+                let lineTrace6 = {
+                    x : lineDataArray.map(object => object.Year),
+                    y : lineDataArray.map(object => object.Other),
+                    type : "scatter",
+                    mode : "line",
+                    line: {
+                        color: "#003f5c"
+                    },
+                    name: "Other"
+                };
+
+                let lineTrace7 = {
                     x : lineDataArray.map(object => object.Year),
                     y : lineDataArray.map(object => object.Total),
                     type : "scatter",
-                    mode : "line"
+                    mode : "line",
+                    line: {
+                        color: "#000000",
+                    },
+                    name: "Total"
                 };
 
                 let lineLayout = {
-                    title : "Total Emissions Over The Last 100 Years",
+                    title : "Emissions Over The Last 100 Years",
                     xaxis : {
                         title : "Year"
                     },
                     yaxis : {
-                        title : "Total Emissions (MtCO<sub>2</sub>)"
+                        title : "Emissions (MtCO<sub>2</sub>)"
                     }
                 };
 
-                let lineData = [lineTrace];
+                let lineData = [lineTrace1, lineTrace2, lineTrace3, lineTrace4, lineTrace5, lineTrace6, lineTrace7];
 
                 let lineConfig = {responsive: true};
 
@@ -285,13 +355,18 @@
                     let pieTrace = {
                     values : pieData.slice(1,6),
                     labels : pieLabels,
-                    type : "pie"
+                    type : "pie",
+                    hole: 0.4,
+                    marker: {
+                        colors: ["#ffa600", "#ff6361", "#bc5090", "#58508d", "#003f5c"]
+                    }
                     };
 
                     let pieTraceData = [pieTrace];
 
                     let pieLayout = {
-                        title : `Emissions in ${selectedYear} (MTCO<sub>2</sub>)`                    };
+                        title : `Emissions breakdown for ${selectedCountry}, ${selectedYear} (MTCO<sub>2</sub>)`
+                    };
 
                     Plotly.newPlot("pie", pieTraceData, pieLayout);
 

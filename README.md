@@ -26,3 +26,5 @@ The datasets are sourced here (obtained via Kaggle):
  * [Seaborn - setting axis labels](https://stackoverflow.com/questions/31632637/label-axes-on-seaborn-barplot)
  * [Seaborn - xtick rotation](https://stackoverflow.com/questions/26540035/rotate-label-text-in-seaborn)
  * [Seaborn - plot colors](https://python-charts.com/ranking/bar-plot-seaborn/?utm_content=cmp-true)
+
+ Group members: Edward Vaughan, Daniel Daniel, Essa Bostan, Mujahid Iqbal
