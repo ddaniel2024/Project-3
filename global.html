@@ -10,7 +10,7 @@
 
 <body>
 
-    <div class="container">
+    <div id="container">
 
         <div id="heading">
             <h1>CO<sub>2</sub> Emission Data</h1>
@@ -46,6 +46,9 @@
             <div class="internal-link", class="pulse">
                 <a href="country.html">Switch to Country Focus</a>
             </div>
+            <div>
+                <button onclick="darkMode()">Darkmode</button>
+            </div>
         
         </div>
 
@@ -54,6 +57,11 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="static/js/logic_global.js"></script>
+    <script>
+        function darkMode() {
+            document.getElementById("container").style.backgroundColor = "#240750";
+        }
+    </script>
 
 </body>
 
