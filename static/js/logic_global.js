@@ -4,7 +4,7 @@ function buildCharts() {
 
         //Retrieve data from json
         let emissionData = data.emissions;
-        let gdpData = data.gdp;
+        let GDPData = data.gdp;
         let populationData = data.population;
         let countryData = data.countries
 
@@ -29,19 +29,19 @@ function buildCharts() {
             };
 
             //Establish empty arrays to populate with data for the bubble plot 
-            let gdps = [];
+            let GDPs = [];
             let populations = [];
             let countries = [];
             let emissions = [];
 
             //Filter the JSON data with the getContinent function to get only the data where the continent matches the one in the current loop
-            let countryGdp = gdpData.filter(getContinent);
+            let countryGDP = GDPData.filter(getContinent);
             let countryPopulation = populationData.filter(getContinent);
             let countryName = countryData.filter(getContinent);
 
             //2nd For loop to gather the GDP and population data, and push into the empty arrays
             for (let i=0; i<countryName.length; i++) {
-                gdps.push(countryGdp[i][selectedBubbleYear]);
+                GDPs.push(countryGDP[i][selectedBubbleYear]);
                 populations.push(countryPopulation[i][`${selectedBubbleYear} Population`]);
 
                 let country = countryName[i].Country;
@@ -63,7 +63,7 @@ function buildCharts() {
             //Generate a trace for the bubble chart, with emission as marker size
             let bubbleTrace = {
                 x : populations,
-                y : gdps,
+                y : GDPs,
                 type : "scatter",
                 mode : "markers",
                 marker : {

@@ -21,6 +21,8 @@ The datasets are sourced here (obtained via Kaggle):
  * [CSS styling](https://www.w3schools.com/html/html_css.asp)
  * [CSS comments](https://www.w3schools.com/css/css_comments.asp)
  * [CSS Flexbox](https://www.w3schools.com/css/css3_flexbox.asp)
+ * [CSS @keyframes](https://www.w3schools.com/cssref/css3_pr_animation-keyframes.php)
+ * [CSS @keyframes pulse](https://www.geeksforgeeks.org/css-pulse-animation/)
  * [Aligning divs](https://stackoverflow.com/questions/39476292/align-select-boxes-and-text-boxes)
  * [Creating and styling new divs](https://stackoverflow.com/questions/6840326/how-can-i-create-and-style-a-div-using-javascript)
  * [Seaborn - setting axis labels](https://stackoverflow.com/questions/31632637/label-axes-on-seaborn-barplot)

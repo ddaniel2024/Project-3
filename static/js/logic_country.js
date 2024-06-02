@@ -27,7 +27,6 @@ function buildCharts() {
         //For loop to loop through the emissions array
         for (let i=0; i<emissionTypes.length; i++) {
             
-
             //Generate a trace for the line chart
             let lineTrace = {
                 x : lineDataArray.map(object => object.Year),
