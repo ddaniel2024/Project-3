@@ -13,14 +13,14 @@
     <div class="container">
 
         <div id="heading">
-            <h1>CO2 Emission Data</h1>
+            <h1>CO<sub>2</sub> Emission Data</h1>
             <p>Use the interactive charts below to explore the dataset</p>
         </div>
 
         <div id="global-info">
 
             <div class="subheading">
-                <h3>Global CO2 Emissions</h3>
+                <h2>Global CO<sub>2</sub> Emissions</h2>
             </div>
 
             <div id="bubble-year">
@@ -48,7 +48,7 @@
         <div id="country-info">
 
             <div class="subheading">
-                <h3>Country-focused CO2 Emissions</h3>
+                <h3>Country-focused CO<sub>2</sub> Emissions</h3>
             </div>
 
             <div class="panel">
@@ -64,7 +64,7 @@
             <div class="panel">
                 <p class="panel-title">Total Emissions</p>
                 <p id="emissions-panel-info"></p>
-                <p class="panel-subtitle">MtCO2</p>
+                <p class="panel-subtitle">MtCO<sub>2</sub></p>
             </div>
 
             <div id="line"></div>
@@ -203,7 +203,7 @@
 
                 }
                 else {
-                    //Generate bar chart           
+                    //Generate bar chart                    
                     let barTrace = {
                         x : sliedEmissionsRow.map(object => object.Country),
                         y : sliedEmissionsRow.map(object => object[selectedBarEmission]),
@@ -215,13 +215,11 @@
                     let barLayout = {
                         title : `Top 10 ${selectedBarEmission} Emissions in ${selectedBarYear}`,
                         yaxis : {
-                            title : "MTCO2"
+                            title : "MTCO<sub>2</sub>"
                         }
                     };
 
-                    let barConfig = {responsive: true};
-
-                    Plotly.newPlot("bar", barTraceData, barLayout, barConfig);
+                    Plotly.newPlot("bar", barTraceData, barLayout);
                 }
 
                 //Line Graph
@@ -246,7 +244,7 @@
                         title : "Year"
                     },
                     yaxis : {
-                        title : "Total Emissions (MtCO2)"
+                        title : "Total Emissions (MtCO<sub>2</sub>)"
                     }
                 };
 
@@ -299,12 +297,9 @@
                     let pieTraceData = [pieTrace];
 
                     let pieLayout = {
-                        title : `Emissions in ${selectedYear}`
-                    };
+                        title : `Emissions in ${selectedYear} (MTCO<sub>2</sub>)`                    };
 
-                    let pieConfig = {responsive: true};
-
-                    Plotly.newPlot("pie", pieTraceData, pieLayout, pieConfig);
+                    Plotly.newPlot("pie", pieTraceData, pieLayout);
 
                     //Data is also displayed on the emissions info panel
                     d3.select("#emissions-panel-info").text(pieData[0]);
