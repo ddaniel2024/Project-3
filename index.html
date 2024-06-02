@@ -170,9 +170,11 @@
             
                 };
 
-                bubbleTraceData = [bubbleTrace];
+                let bubbleTraceData = [bubbleTrace];
 
-                Plotly.newPlot("bubble-plot", bubbleTraceData, bubbleLayout);
+                let bubbleConfig = {responsive: true};
+
+                Plotly.newPlot("bubble-plot", bubbleTraceData, bubbleLayout, bubbleConfig);
 
                 //Barplot
                 //Use a function to find the rows of data that match the selected year
@@ -217,7 +219,9 @@
                         }
                     };
 
-                    Plotly.newPlot("bar", barTraceData, barLayout);
+                    let barConfig = {responsive: true};
+
+                    Plotly.newPlot("bar", barTraceData, barLayout, barConfig);
                 }
 
                 //Line Graph
@@ -246,9 +250,11 @@
                     }
                 };
 
-                lineData = [lineTrace];
+                let lineData = [lineTrace];
 
-                Plotly.newPlot("line", lineData, lineLayout);
+                let lineConfig = {responsive: true};
+
+                Plotly.newPlot("line", lineData, lineLayout, lineConfig);
 
                 //Pie Chart
                 //Establish an array for emission types (labels), and an blank array for the data
@@ -296,7 +302,9 @@
                         title : `Emissions in ${selectedYear}`
                     };
 
-                    Plotly.newPlot("pie", pieTraceData, pieLayout);
+                    let pieConfig = {responsive: true};
+
+                    Plotly.newPlot("pie", pieTraceData, pieLayout, pieConfig);
 
                     //Data is also displayed on the emissions info panel
                     d3.select("#emissions-panel-info").text(pieData[0]);
