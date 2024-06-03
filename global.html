@@ -10,7 +10,7 @@
 
 <body>
 
-    <div id="container">
+    <div id="container", class="darkmode1">
 
         <div id="heading">
             <h1>CO<sub>2</sub> Emission Data</h1>
@@ -46,11 +46,7 @@
             <div id="internal-link", class="pulse">
                 <a href="country.html">Switch to Country Focus</a>
             </div>
-            
-            <div id="button">
-                <button onclick="darkMode()" id="mode">DarkMode</button>
-            </div>
-        
+
         </div>
 
     </div>
@@ -58,38 +54,6 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="static/js/logic_global.js"></script>
-    <script>
-        function darkMode() {
-            document.getElementById("container").style.backgroundColor = "#240750";
-            document.getElementById("heading").style.color = "#ffffff";
-
-            document.getElementById("global-info").style.backgroundColor = "#344c64";
-            document.getElementById("subheading").style.color = "#ffffff";
-
-            document.getElementById("bubble-year").style.backgroundColor = "#577b8d";
-
-            document.getElementById("bubble-plot").style.backgroundColor = "#344c64";
-
-            document.getElementById("bar-selectors").style.backgroundColor = "#577b8d";
-            document.getElementById("bar-year").style.backgroundColor = "#577b8d";
-            document.getElementById("bar-emission").style.backgroundColor = "#577b8d";
-            
-            let panelTitles = document.getElementsByClassName("panel-title");
-            for (let i=0; i<panelTitles.length; i++) {
-                panelTitles[i].style.color = "#ffffff";
-            }
-
-            document.getElementById("bar").style.backgroundColor = "#57a6a1";
-
-            document.getElementById("internal-link").style.backgroundColor = "#577b8d";
-            document.getElementById("internal-link").style.color = "#ffffff";
-            
-            document.getElementById("mode").innerHTML = "LightMode";
-
-        }
-        
-
-    </script>
 
 </body>
 
