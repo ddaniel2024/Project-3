@@ -142,7 +142,7 @@ function buildCharts() {
                 title : `Top 10 ${selectedBarEmission} Emissions in ${selectedBarYear}`,
                 yaxis : {
                     title : "MTCO<sub>2</sub>"
-                }
+                },
             };
 
             Plotly.newPlot("bar", barTraceData, barLayout);

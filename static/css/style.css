@@ -21,7 +21,7 @@
     padding: 2px;
 
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-
+    
     text-align: center;
 }
 
@@ -43,7 +43,7 @@
     align-items: center;
 }
 
-.subheading {
+#subheading {
     width: 90%;
     height: 20px;
 
@@ -261,7 +261,7 @@
 }
 
 /*link*/
-.internal-link {
+#internal-link {
     width: 20%;
     height: 50px;
 
@@ -282,6 +282,19 @@
     align-items: center;
 
     animation: pulse 3s infinite;
+}
+
+#button {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: right;
+    align-items: center;
+}
+
+#mode {
+    border-radius: 20px;
 }
 
 /*pulse*/
@@ -325,7 +338,7 @@
         flex: 100%;
     }
 
-    .internal-link {
+    #internal-link {
         width: 50%
     }
 }
