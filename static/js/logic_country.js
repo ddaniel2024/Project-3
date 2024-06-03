@@ -50,7 +50,7 @@ function buildCharts() {
                 title : "Year"
             },
             yaxis : {
-                title : "Emissions (MTCO<sub>2</sub>)"
+                title : "Emissions (MtCO<sub>2</sub>)"
             }
         };
 
@@ -102,7 +102,7 @@ function buildCharts() {
             let pieTraceData = [pieTrace];
 
             let pieLayout = {
-                title : `Emissions breakdown for ${selectedCountry}, ${selectedYear} (MTCO<sub>2</sub>)`,
+                title : `Emissions breakdown for ${selectedCountry}, ${selectedYear} (MtCO<sub>2</sub>)`,
                 legend : {
                     itemsizing : "constant"
                 }

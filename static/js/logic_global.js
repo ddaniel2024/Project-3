@@ -119,7 +119,7 @@ function buildCharts() {
         d3.select("#bar").html("");
 
         //Generate barplot
-        //Conditional: if there is no data availalbe, an error message is displayed; if not, the data is displayed
+        //Conditional: if there is no data available, an error message is displayed; if not, the data is displayed
         if (sliedEmissionsRow == 0) {
 
             bar.innerHTML = "Data Unavailable";
@@ -141,7 +141,7 @@ function buildCharts() {
             let barLayout = {
                 title : `Top 10 ${selectedBarEmission} Emissions in ${selectedBarYear}`,
                 yaxis : {
-                    title : "MTCO<sub>2</sub>"
+                    title : "MtCO<sub>2</sub>"
                 },
             };
 
